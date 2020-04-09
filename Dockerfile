@@ -8,7 +8,11 @@ RUN apk add --virtual .deps git make gcc g++ && \
     git clone https://github.com/official-stockfish/Stockfish.git && \
     cd Stockfish/src && \
     git am < /0001-fix-alpine-linux-stack-size.patch && \
-    make profile-build ARCH=x86-64-modern -j $(nproc)
+    make profile-build ARCH=x86-64-modern -j $(nproc) && \
+    cd ../.. && \
+    git clone https://github.com/elcabesa/vajolet.git && \
+    cd vajolet && \
+    make -j $(nproc)
 
 WORKDIR /Stockfish/src
 
