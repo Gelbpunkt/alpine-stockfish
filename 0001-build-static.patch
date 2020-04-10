@@ -1,12 +1,12 @@
-From 6c2f095d57b77c71ec868d7a367fdc4f56e26ecf Mon Sep 17 00:00:00 2001
+From 0c3230b1ed6a4c87f0048d0bdf5871b3605c3647 Mon Sep 17 00:00:00 2001
 From: Jens Reidel <jens@troet.org>
-Date: Thu, 9 Apr 2020 18:49:58 +0200
-Subject: [PATCH] fix alpine linux stack size
+Date: Fri, 10 Apr 2020 12:10:46 +0200
+Subject: [PATCH] build static
 
 ---
  .gitignore   | 3 +++
- src/Makefile | 4 ++--
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ src/Makefile | 5 +++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
  create mode 100644 .gitignore
 
 diff --git a/.gitignore b/.gitignore
@@ -19,22 +19,30 @@ index 00000000..b1b9742e
 +src/stockfish
 +src/.depend
 diff --git a/src/Makefile b/src/Makefile
-index 15ad6353..9cb16178 100644
+index 15ad6353..750be4cd 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -515,13 +515,13 @@ clang-profile-use:
+@@ -159,6 +159,7 @@ ifeq ($(COMP),gcc)
+ 	comp=gcc
+ 	CXX=g++
+ 	CXXFLAGS += -pedantic -Wextra -Wshadow
++	LDFLAGS += -static
+ 
+ 	ifeq ($(ARCH),armv7)
+ 		ifeq ($(OS),Android)
+@@ -515,13 +516,13 @@ clang-profile-use:
  gcc-profile-make:
  	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
  	EXTRACXXFLAGS='-fprofile-generate' \
 -	EXTRALDFLAGS='-lgcov' \
-+	EXTRALDFLAGS='-static -lgcov -Wl,-z,stack-size=1073741824' \
++	EXTRALDFLAGS='-lgcov -Wl,-z,stack-size=271360' \
  	all
  
  gcc-profile-use:
  	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
  	EXTRACXXFLAGS='-fprofile-use -fno-peel-loops -fno-tracer' \
 -	EXTRALDFLAGS='-lgcov' \
-+	EXTRALDFLAGS='-static -lgcov -Wl,-z,stack-size=1073741824' \
++	EXTRALDFLAGS='-lgcov -Wl,-z,stack-size=271360' \
  	all
  
  icc-profile-make:
