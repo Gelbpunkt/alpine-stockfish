@@ -22,14 +22,6 @@ diff --git a/src/Makefile b/src/Makefile
 index 15ad6353..750be4cd 100644
 --- a/src/Makefile
 +++ b/src/Makefile
-@@ -159,6 +159,7 @@ ifeq ($(COMP),gcc)
- 	comp=gcc
- 	CXX=g++
- 	CXXFLAGS += -pedantic -Wextra -Wshadow
-+	LDFLAGS += -static
- 
- 	ifeq ($(ARCH),armv7)
- 		ifeq ($(OS),Android)
 @@ -515,13 +516,13 @@ clang-profile-use:
  gcc-profile-make:
  	$(MAKE) ARCH=$(ARCH) COMP=$(COMP) \
